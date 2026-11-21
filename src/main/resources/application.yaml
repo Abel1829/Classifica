@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: classifica
+  datasource:
+    url: jdbc:postgresql://localhost:5433/classifica
+    username: classifica
+    password: classifica
+  jpa:
+    hibernate:
+      ddl-auto: update
+    open-in-view: false
+
+server:
+  port: 8081
