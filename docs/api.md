@@ -32,3 +32,18 @@ Errors use the Problem Details format (RFC 9457): 404 when a venue does not exis
 | DELETE | /api/teams/{teamId}/players/{playerId} | Remove a player | 204 |
 
 Rules: a shirt number (1 to 99) must be unique within a team (409 Conflict otherwise). Positions: GOALKEEPER, DEFENDER, MIDFIELDER, FORWARD.
+
+## Tournaments
+| Method | Path | Description | Success |
+|---|---|---|---|
+| GET | /api/tournaments | List tournaments | 200 |
+| GET | /api/tournaments/{id} | Get one tournament | 200 |
+| POST | /api/tournaments | Create a tournament (starts as DRAFT, unpublished) | 201 |
+| PUT | /api/tournaments/{id} | Replace a tournament | 200 |
+| PATCH | /api/tournaments/{id}/status | Move to the next status | 200 |
+| POST | /api/tournaments/{id}/publish | Make visible to the public | 200 |
+| POST | /api/tournaments/{id}/unpublish | Hide from the public | 200 |
+| DELETE | /api/tournaments/{id} | Delete (draft only) | 204 |
+
+Lifecycle: DRAFT -> REGISTRATION -> IN_PROGRESS -> COMPLETED, one step at a time (409 Conflict otherwise).
+Rules: a draft tournament cannot be published; format and points cannot change once IN_PROGRESS; only drafts can be deleted.
