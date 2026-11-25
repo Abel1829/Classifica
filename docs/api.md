@@ -47,3 +47,12 @@ Rules: a shirt number (1 to 99) must be unique within a team (409 Conflict other
 
 Lifecycle: DRAFT -> REGISTRATION -> IN_PROGRESS -> COMPLETED, one step at a time (409 Conflict otherwise).
 Rules: a draft tournament cannot be published; format and points cannot change once IN_PROGRESS; only drafts can be deleted.
+
+## Tournament entries (teams in a tournament)
+| Method | Path | Description | Success |
+|---|---|---|---|
+| GET | /api/tournaments/{tournamentId}/teams | List the teams entered | 200 |
+| POST | /api/tournaments/{tournamentId}/teams | Enter a team (body: teamId, optional seed) | 201 |
+| DELETE | /api/tournaments/{tournamentId}/teams/{entryId} | Remove an entry | 204 |
+
+Rules: a team can be entered once per tournament, and entries can only change while the tournament is in DRAFT or REGISTRATION (409 Conflict otherwise). A team that is entered in a tournament cannot be deleted (409 Conflict).

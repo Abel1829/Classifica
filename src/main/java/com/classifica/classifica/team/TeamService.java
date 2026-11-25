@@ -27,6 +27,11 @@ public class TeamService {
         return TeamResponse.from(getOrThrow(id));
     }
 
+    /** Used by other modules that need the team itself. */
+    public Team requireTeam(Long id) {
+        return getOrThrow(id);
+    }
+
     @Transactional
     public TeamResponse create(TeamRequest request) {
         Team team = new Team(request.name(), request.shortName(), request.logoUrl(), request.colors());
@@ -47,6 +52,7 @@ public class TeamService {
         }
         players.deleteByTeamId(id);
         teams.deleteById(id);
+        teams.flush();
     }
 
     private Team getOrThrow(Long id) {
