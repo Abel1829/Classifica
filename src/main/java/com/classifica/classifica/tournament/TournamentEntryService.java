@@ -41,6 +41,10 @@ public class TournamentEntryService {
         if (entries.existsByTournamentIdAndTeamId(tournamentId, team.getId())) {
             throw new ConflictException("Team " + team.getId() + " is already entered in this tournament");
         }
+        if (entries.existsActiveEntryInAnotherTournament(team.getId(), tournamentId)) {
+            throw new ConflictException("Team " + team.getId()
+                    + " is still in another tournament that has not finished");
+        }
         TournamentEntry entry = new TournamentEntry(tournament, team, request.seed());
         return TournamentEntryResponse.from(entries.save(entry));
     }

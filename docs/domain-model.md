@@ -173,6 +173,7 @@ The table is named `app_user` because `user` is a reserved word in PostgreSQL.
 7. The public site only shows tournaments that are published and not in draft.
 8. Every organizer sees and changes only their own data. Referees and team managers see only what belongs to them.
 9. A knockout match cannot end in a draw: the winner is decided by the tournament's draw rule (extra time and penalties).
+10. A team can be entered in only one unfinished tournament at a time. It can join another tournament once its current one is COMPLETED.
 
 ## 6. Assumptions and open points
 

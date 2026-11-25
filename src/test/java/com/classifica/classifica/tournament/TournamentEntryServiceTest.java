@@ -91,6 +91,18 @@ class TournamentEntryServiceTest {
         verify(entries, never()).delete(any());
     }
 
+    @Test
+    void add_teamInAnotherUnfinishedTournament_isRejected() {
+        when(tournaments.findById(1L)).thenReturn(Optional.of(tournament()));
+        when(teams.requireTeam(5L)).thenReturn(team(5L));
+        when(entries.existsByTournamentIdAndTeamId(1L, 5L)).thenReturn(false);
+        when(entries.existsActiveEntryInAnotherTournament(5L, 1L)).thenReturn(true);
+
+        assertThatThrownBy(() -> service.add(1L, new TournamentEntryRequest(5L, null)))
+                .isInstanceOf(ConflictException.class);
+        verify(entries, never()).save(any());
+    }
+
     private Tournament tournament() {
         return new Tournament("City Cup", TournamentFormat.LEAGUE,
                 LocalDate.of(2027, 1, 10), LocalDate.of(2027, 3, 10), 3, 1, 0);

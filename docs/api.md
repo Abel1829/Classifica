@@ -55,4 +55,4 @@ Rules: a draft tournament cannot be published; format and points cannot change o
 | POST | /api/tournaments/{tournamentId}/teams | Enter a team (body: teamId, optional seed) | 201 |
 | DELETE | /api/tournaments/{tournamentId}/teams/{entryId} | Remove an entry | 204 |
 
-Rules: a team can be entered once per tournament, and entries can only change while the tournament is in DRAFT or REGISTRATION (409 Conflict otherwise). A team that is entered in a tournament cannot be deleted (409 Conflict).
+Rules: A team can only be entered in a tournament if it is not in another tournament that has not finished (409 Conflict otherwise). A team that is entered in a tournament cannot be deleted (409 Conflict).
